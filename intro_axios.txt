@@ -1,0 +1,294 @@
+#Axios:
+      what is axios?
+a ik tool ha jo asse javscript(js) wich use krna han,client side tool ha,aur us da faida ke ha k 
+apna kam assan kr da ,jado asse koi cheez server to leni ,deni,bdli howe ya delete 
+krni howe assan us no use krna ha ,broser wich ve same code kam krda aur server wich ve same ha.mtlbh
+ik code assan jera broser ali side diro likhoo same code aa browser diro ve km kre ga ..
+browser---------->xmlHttpRequest da zrye 
+server ----------->node da vich ik built in module honda ha http da zrye 
+a request la k janda ta k apna data no manuplate kr sak
+      Promise ??
+promise kuch sano da ga future ya ta o km pora hoga ya fail ho ga 
+us wasta network call,jeven asen server no call krna ha ta time lg skda ha tan kr ,
+sano promise da sahara lawna penda ha,us kr k axios wich promiss use hona na jere sano 
+result denda na 
+promis----------complete------>.then()  wich result ae ga
+promis ----------fail---------->.catch() agr koi error ae gi
+GET,Update,Delete,Post -------->ye char cheze jb krni hn to hum axios use kre ga
+axios------intercepter ------>ye deta ha hum middleware ya hook lga sakta gatekeeper
+request--->object--->hmai kafe sari cheze deta[header,meta,heder,path,session etc]
+     Progress capturing??
+Agar file upload kar rahe ho, Axios tumhe progress percentage, speed, remaining time waghera sab de sakta hai.
+     install krna??
+npm install axios
+                          Workings&&mechanics
+assal vich us no 4 cheze zrrt hoti ha main:
+        1-kam  2-kaha s hoga  3-jo bhejna(data)   4-extra kuch instuctions ya hedait
+KAAM----->GET,POST,DELTE,PUT ho  skta hai..
+KAHA------>url wo urls jaha wo kam ho skta ha,route jo end points hota 
+bhejna ----> data jo ap bejna chata hai 
+extra ------> jb ap na kuch extra bhejan ha koi instruction like heders waghra 
+
+
+                          codings Stuff
+
+axios.post('/api/login',data:{email:'a@gmail.com',password:'123'}).then().catch()
+                          promises
+acha hum na call kr de network call,ab waha s ik response hami ae keo k us na yani axios na use keya ha
+promise concept use krna jasa resolve ya reject ho ga ,agr resolve howa to then mai catch kre ga
+agr na howa to catch eror mai pkr len ga 
+.then((response)=>{
+response.date -------->ye data mil geya hmai json() use krna k zrrt ni,khud ho geya 
+
+})
+.catch((error){
+eroror ------to hmai error nzra a jae gi hum na kr kr li yaha 
+})
+
+✅ Axios Instance Summary (Simple Understanding):
+
+Agar koi cheez (jaise baseURL, headers, timeout) har request mein repeat ho rahi ho, to humein baar baar likhne ki zarurat nahi hoti. Usko hum default config bana dete hain using axios.create().
+
+Jese:
+
+const api = axios.create({
+  baseURL: 'https://api.rameesa.com',   // Domain name jo bar bar repeat hota
+  timeout: 3000,                        // Agar 3 second me response na aye to request fail
+  headers: {
+    'Authorization': 'Bearer your_token',   // Backend ko batata hai user kaun hai
+    'Content-Type': 'application/json'      // Data kis format me bhej rahe hain
+  }
+});
+          <----------------Use---------------->
+Ab is instance ko reuse kar sakte hain jahan jahan API call chahiye:
+
+api.get('/users');               // https://api.rameesa.com/users
+api.post('/login', { email: 'a@b.com', password: '123' });
+
+======>ab dekho pora url liken k bjae hum sirf sirf end point likhta hai t baki us mai 
+already cheze hum na configure kr den..
+-------------------------------------Axios k andar ye attribues hota ha-----------------------------------------------------------------
+✅ Axios Request Config Options Table (Asaan Tarz Me)
+No.	Option Name	Type	Use / Purpose (Kya karta hai)	Roman Urdu Explanation (Asaan)
+1	url:	string	Request kis URL pe bhejni hai	URL jis pe request bhejni ho, ye lazmi hoti hai.
+2	method:	string	Request method (GET, POST, PUT, DELETE...)	Konsi type ki request bhejni hai (default: GET).
+3	baseURL:	string	Sab URLs se pehle lagne wala hissa	Har request ke start me ye base URL lag jayega.
+4	allowAbsoluteUrls	:boolean	Agar true ho to absolute URL baseURL ko override karega	Agar full URL diya to baseURL ignore hoga. (default: true)
+5	transformRequest	:function[]	Request data bhejne se pehle modify karne ke liye	Request bhejne se pehle data ko badal sakte ho.
+6	transformResponse	:function[]	Response data receive hone ke baad modify karne ke liye	Jab data aaye server se, to usay modify karne ka moka deta hai.
+7	headers	object	:Custom headers bhejne ke liye	Header me extra info bhejni ho to use hota hai.
+8	params	object:	Query string parameters (URL me ?key=value)	URL ke sath query parameters bhejne ke liye.
+9	paramsSerializer:	function	params ko string me convert karne ka tareeqa	Agar special format me params chahiye, to ye function use hota hai.
+10	data:	object/string	POST, PUT, DELETE me body data bhejne ke liye	Server ko data bhejne ke liye.
+11	timeout:	number (ms)	Kitni der tak wait kare request ke liye	Agar itne time me response na aaye to request cancel ho jaye.
+12	withCredentials	:boolean	Cookies ya auth headers bhejne ke liye	Cross-origin requests me cookies bhejni ho to true rakho.
+13	adapter	:function	Custom request handler likhne ke liye	Apna khud ka request logic likhne ke liye. Mostly test cases me use hota hai.
+14	auth:	{ username, password }	HTTP Basic Auth ke liye credentials	Username/password bhejne ke liye (Authorization header banata hai).
+15	responseType	:string	Server se kis type ka data expect kar rahe ho	JSON, blob, arraybuffer, text, etc. Default: json.
+16	responseEncoding	:string	Node.js me response decode karne ka encoding	Text encoding (like utf-8) set karta hai. (browser ignore karta hai).
+17	xsrfCookieName	:string	XSRF token kis cookie me hai	CSRF protection ke liye token ka naam.
+18	xsrfHeaderName	:string	XSRF token kis header me bhejna hai	CSRF token ka header ka naam.
+19	onUploadProgress	:function	Upload progress track karne ke liye	File upload ho to progress dikhane ke liye.
+20	onDownloadProgress	:function	Download progress track karne ke liye	File download ho to progress dikhane ke liye.
+21	maxContentLength:	number	Response size limit (in bytes)	Response kitna bara ho sakta hai (Node.js only).
+22	maxBodyLength	:number	Request body size limit (Node.js only)	Request body ka max size.
+23	validateStatus:	function	Decide kare response successful hai ya nahi	Response status code check karta hai (default: 200-299 is OK).
+24	maxRedirects	:number	Kitni baar redirect follow kare	Default: 5. Agar 0 ho to redirect follow nahi karega.
+25	socketPath	:string	Node.js me UNIX socket path	Docker jese system ke liye use hota hai.
+26	httpAgent:, httpsAgent	object	Node.js me advanced HTTP options ke liye	Jaise keepAlive, proxy setup, etc.
+27	proxy	object:	Proxy server ka address, port, and auth	Agar request kisi proxy ke through bhejni ho.
+28	signal	:AbortSignal	Request cancel karne ke liye	Request cancel karne ka modern tareeqa (AbortController).
+29	cancelToken:	CancelToken	(Deprecated) Cancel request karne ka tareeqa	Pehle ye use hota tha request cancel karne ke liye. Ab signal prefer hota hai.
+30	decompress	:boolean	Node.js me response body ko decompress kare ya nahi
+----------------------------response ye carry krta ha property-------------
+📌 Asaan Yaad Rakhne Ka Trick:
+Property	:Yaad Rakhne Ka Hint
+data	:Server ne kya data diya
+status	:Kaisa response aya (200? 404?)
+statusText	:Text version of status (OK, etc.)
+headers	:Extra info jo server ne bheja
+config	:Aapne request banane me kya diya
+request	:Backend-level request object
+-----------------------------------intercepter/middleware-----------------------
+✅ Axios Interceptor (Request) - Summary
+
+    Interceptor: Aik middleware hota hai jo har request ya response se pehle ya baad chal sakta hai.
+
+    Request Interceptor:
+    axios.interceptors.request.use((config) => { ... })
+
+        Ye har request se pehle chalti hai.
+
+        config object mein request ki saari settings hoti hain (URL, method, headers, timeout, etc).
+
+    Use-case:
+    Token ya common headers har request mein daalne ke liye.
+
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+});
+
+    axios instance banake bhi yeh interceptor add kar sakte hain, jisme baseURL aur default headers set hote hain.
+
+-------explantions keya ? assal mai ye jo request hm bhejta hai wo pehla axiso k config object ko use krtaha 
+us mai jo settings ke hti ha in ko followe krti ha ,like kuch add krna ya update krna ah
+ta keya krna sab ye krti ah ,ta k hum reqeust ko update kr saka ,
+axios-----intercept----reqeust----ko milta ha ik config object ----object ko 
+use kr k hum log bht kuch kr skta hai hr cheez ko hr property ko update kr skta hai
+-------------------------------------------------------------------------------------------
+---------------------Handling Errors-----------
+Axios Error Handling:
+- .catch(error) se har error handle hota hai.
+- error.response → Server ne jawab diya lekin error status (404/500).
+- error.request → Request gaya, magar koi response nahi aaya (network fail).
+- else → Request banate waqt hi masla hua (config, URL issue).
+- error.toJSON() → Error ko object format mein dekhne ke liye.
+- validateStatus: status < 500 → Sirf 500+ errors ko handle karo, 404/400 ko nahi.
+------------------------------cancel request -----------
+🔹 signal ek signal wire hoti hai jo Axios ko kehta hai "request cancel karo".
+
+🔹 AbortController JavaScript ka remote hota hai jisse hum request ko .abort() se cancel kar sakte hain.
+
+🔹 Use hota hai jab:
+   - user ne dubara form submit kiya ho,
+   - net slow ho,
+   - ya multiple search calls ho rahe ho.
+
+🔹 Code:
+const controller = new AbortController();
+axios.get('/url', { signal: controller.signal });
+controller.abort(); // Cancel request
+
+🔹 Timeout ke liye:
+axios.get('/url', { signal: AbortSignal.timeout(5000) }); // 5 sec mein cancel
+
+🔹 Fayda:
+→ unnecessary requests cancel → speed fast → user experience better.
+
+---------------------flow ha intercepter ka aur axios------->
+
+💡 JavaScript + Axios ka Flow (Roman Urdu mein):
+Step	Kaam kya hota hai?	Asaan lafzon mein
+1	Tumhara code run hota hai	JavaScript browser mein load hoti hai.
+2	Axios se request banayi jati hai	axios.get() likhne ka matlab hai: “Yeh data le kar aao is URL se”.
+3	Axios ek HTTP request object banata hai	Axios ke andar request ka pura plan hota hai: URL, method, data, headers.
+4	Interceptors kaam mein aate hain (agar lagaye hon)	Agar tum ne interceptors lagaye hain to wo request bhejne se pehle usme kuch edit ya check kar sakte hain (middleware jesa).
+5	Request network ke zariye server tak jati hai	Axios ab Internet ke zariye server tak request bhejta hai.
+6	Server request receive karta hai	Server tumhari request ko padhta hai aur check karta hai ke tum kya maang rahe ho.
+7	Server se response wapas aata hai	Server tumhe ek jawab deta hai: data, status code, headers waghera.
+8	Axios response interceptors check karte hain	Agar tum ne response interceptors lagaye hain to wo response par kaam karte hain.
+9	JavaScript then() ya catch() chalaata hai	Agar sab kuch theek ho to .then() chalta hai, agar error ho to .catch().
+🪄 Yeh sab kaam kis tarah shift hota hai? (Control kaise aagey badhta hai?)
+
+JavaScript normally synchronous hoti hai — ek line complete ho to doosri chalti hai.
+Lekin Axios (aur fetch) asynchronous hote hain. Matlab:
+
+    JavaScript Axios ko kahti hai: “Request bhej do.”
+
+    Axios background mein request bhejta hai, JavaScript aagey chalti rehti hai.
+
+    Jab server ka jawab aata hai, JavaScript tab .then() ko run karti hai.
+
+⏳ JavaScript rukti nahi — wo kahti hai: jab jawab aaye, mujhe batana.
+🧩 Iska comparison Django Middleware se:
+Axios Interceptors	Django Middleware
+Request bhejne se pehle data modify karte hain	Request receive hone se pehle server mein data modify hota hai
+Response milne ke baad modify karte hain	Response server se bhejne se pehle modify hota hai
+Browser/Client side pe hota hai	Server side pe hota hai
+--------------url encoding---
+✅ Axios mein application/x-www-form-urlencoded Summary (Bacho wali Style)
+
+    Default: Axios data ko JSON bana ke bhejta hai (Content-Type: application/json).
+
+    Form-style data bhejna ho to:
+    ➤ Content-Type: application/x-www-form-urlencoded lagana hota hai.
+
+    Kaise bhejein?
+    ✅ Browser: URLSearchParams use karo
+    ✅ Node ya Browser: qs.stringify() best hai (nested object bhi handle karta hai)
+    ✅ Node: querystring ya url.URLSearchParams() bhi use ho sakta hai (simple data ke liye)
+
+    Shortcut Trick:
+    Agar tum bas headers: {'content-type': 'application/x-www-form-urlencoded'} set kar do,
+    to Axios khud hi object ko form-data style mein convert kar deta hai.
+
+📦 JSON → object jaise {name: "Ali"}
+📬 Form-URL → name=Ali&age=20
+
+🧠 Server par agar body-parser.urlencoded({ extended: true }) laga ho to nested data bhi mil jata hai.
+------------------------Multipart Body--------------
+✅ Multipart/Form-Data Summary (Asan Urdu mein)
+📦 Kya hota hai?
+
+multipart/form-data aik special format hota hai jab hum form ya file/image browser ya Node.js se backend ko bhejte hain.
+📤 Kab use hota hai?
+
+Jab tumhe:
+
+    File (image, PDF, doc)
+
+    Blob (binary data)
+
+    Mixed data (text + file)
+    bhejna ho — simple JSON ya URL-encoded se nahi ho sakta.
+
+🧴 Browser mein kaise bhejte hain?
+
+const form = new FormData();
+form.append('name', 'Rameesa');
+form.append('file', fileInput.files[0]);
+
+axios.post('https://api.com/upload', form);
+
+⚡ Shortcut (Easy Way):
+
+axios.postForm('https://api.com/upload', {
+  name: 'Rameesa',
+  file: fileInput.files
+});
+
+🖥️ Node.js mein kaise bhejte hain?
+
+Node mein file bhejne ke liye fs aur form-data ya formdata-node use karte hain:
+
+const FormData = require('form-data');
+const fs = require('fs');
+
+const form = new FormData();
+form.append('file', fs.createReadStream('/path/image.jpg'));
+
+axios.post('https://api.com/upload', form);
+
+🆕 Axios ka automatic FormData bananay wala feature:
+
+axios.post('https://api.com/upload', {
+  name: 'Ali',
+  file: fs.createReadStream('/path/file.jpg')
+}, {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+});
+
+🧠 Special Notations:
+Notation	Meaning
+{} 	Value ko JSON string banao
+[] 	Array ko alag-alag fields banao
+✅ Use Cases:
+Situation	Solution
+Form ke through file bhejni ho	FormData ya axios.postForm()
+Node.js se image bhejni ho	form-data + fs.createReadStream()
+Object aur file dono bhejna ho	Axios + 'Content-Type': multipart/...
+Nested ya array data bhejna ho	Axios auto serialize karta hai
+
+Agar tum chaho to main iska visual flow chart bhi bana sakta hoon, ya real-world code example Django backend k sath connect kar k bhi dikha sakta hoon 💡
+
+Bolo?
+
+
+
+
